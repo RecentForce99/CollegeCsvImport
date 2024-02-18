@@ -1,0 +1,101 @@
+.nikitq-form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 25%;
+    margin: 3em auto;
+}
+
+.nikitq-form input {
+    margin-bottom: 10px;
+}
+
+.file-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-width: 40em;
+}
+
+.btn {
+    border: #323333 solid 1px;
+    background-color: #25abff;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: whitesmoke;
+    margin-top: 20px;
+}
+
+.file-label {
+    float: none;
+}
+
+.drag-drop {
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 20em;
+    height: 10em;
+    border: 2px dashed #ccc;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    margin: 1em 8em;
+}
+
+.drag-drop p {
+    margin: 0;
+}
+
+.drag-drop-wrapper .icon {
+    margin-top: 1.5rem;
+    max-width: 9em;
+}
+
+.drag-drop-wrapper .text {
+    font-size: 8rem;
+}
+
+.file-item {
+    margin-bottom: 5px;
+}
+
+#fileInput {
+    display: none;
+}
+
+.nikitq-table {
+    border-collapse: collapse;
+}
+
+.nikitq-table th, .nikitq-table td {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+.nikitq-table th, .nikitq-table td {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+.nikitq-table tr:first-child {
+    background-color: lightblue;
+    text-align: center;
+}
+
+.nikitq-table td:nth-child(1) {
+    width: 30rem;
+}
+
+.nikitq-table td:nth-child(2) {
+    width: 1rem;
+}
+
+.error-row {
+    background-color: #e00000;
+}
+
+.success-row {
+    background-color: #00bc4c;
+}
