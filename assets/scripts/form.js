@@ -35,6 +35,7 @@ dragDrop.addEventListener('drop', function (e) {
 // Обработчик события для выбора файла через input
 document.getElementById('fileInput').addEventListener('change', function (e) {
     const files = e.target.files;
+    deleteOldFiles();
 
     for (let file of files) {
         if (validateFile(file)) {
@@ -80,14 +81,27 @@ function getFileRow(file) {
     const fileRow = document.createElement('tr');
     const fileName = document.createElement('td');
     const fileSize = document.createElement('td');
+    const fileStatus = document.createElement('td');
 
     fileName.textContent = file.name;
     fileSize.textContent = convertBytes(file.size);
+    fileStatus.textContent = "В процессе";
 
+    fileRow.classList.add('additional-rows');
     fileRow.appendChild(fileName);
     fileRow.appendChild(fileSize);
+    fileRow.appendChild(fileStatus);
 
     return fileRow
+}
+
+function deleteOldFiles() {
+    let additionalRows = table.querySelectorAll('.additional-rows');
+    if (additionalRows) {
+        additionalRows.forEach(row => {
+            row.remove();
+        });
+    }
 }
 
 

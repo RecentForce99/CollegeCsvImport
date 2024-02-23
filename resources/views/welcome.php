@@ -36,6 +36,7 @@
             <tr>
                 <th>Название файла</th>
                 <th>Размер файла</th>
+                <th>Статус</th>
                 <th>Сообщение</th>
             </tr>
         </table>
@@ -47,6 +48,7 @@
 </form>
 
 <script src="assets/scripts/form.js"></script>
+<script src="assets/scripts/ajax.js"></script>
 
 </body>
 </html>

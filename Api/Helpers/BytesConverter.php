@@ -2,7 +2,7 @@
 
 namespace Nikitq\Api\Helpers;
 
-class BytesConverterHelper
+class BytesConverter
 {
     public static function convert($bytes): string
     {

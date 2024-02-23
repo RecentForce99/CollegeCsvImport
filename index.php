@@ -8,6 +8,9 @@ require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 
 ini_set('error_reporting', E_ALL & ~E_DEPRECATED);
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 $config = [
     'settings' => [
         'displayErrorDetails' => true,

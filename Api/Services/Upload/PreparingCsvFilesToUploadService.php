@@ -2,53 +2,67 @@
 
 namespace Nikitq\Api\Services\Upload;
 
-use Nikitq\Api\Helpers\BytesConverterHelper;
+use Nikitq\Api\DTO\CsvFileDTO;
+use Nikitq\Api\Helpers\BytesConverter;
 use Nikitq\Api\Helpers\CsvFilesInfo;
+use Nikitq\Api\Helpers\FileStatusManager;
+use Nikitq\Api\Helpers\HttpStatusCodes;
+use Slim\Http\UploadedFile;
 
-class PreparingCsvFilesToUploadService
+class PreparingCsvFilesToUploadService extends AbstractPreparingFiles
 {
-    public function getFiles(array $files): array
+    public function prepareFiles(): void
     {
-        $result = [];
-        foreach ($files as &$file) {
+        foreach ($this->files as &$file) {
             $file = $this->getFileMap($file);
-            $file['statusText'] = $this->getStatusText($file);
-            $file['statusCode'] = $this->getStatusCode($file['statusText']);
+            $statusText = $this->getStatusText($file);
+            $statusCode = $this->setStatusCode($statusText);
 
-            $result[] = $file;
+            if ($file->getError() > 0 || $statusCode !== HttpStatusCodes::OK) {
+                $this->failedFiles[] = FileStatusManager::getFileWithError(
+                    HttpStatusCodes::BAD_REQUEST,
+                    $statusText,
+                    $file
+                );
+            } else {
+                $this->preparedFiles[] = $file;
+            }
         }
-
-        return $result;
     }
 
-    private function getStatusCode(?string $statusText): ?bool
+    private function getFileMap(UploadedFile $file): CsvFileDTO
+    {
+        return new CsvFileDTO(
+            $file->file,
+            $file->getClientFilename(),
+            $file->getClientMediaType(),
+            $file->getSize(),
+            $file->getError(),
+        );
+    }
+
+    private function setStatusCode(string $statusText): int
     {
         if (empty($statusText)) {
-            return null;
+            return HttpStatusCodes::OK;
         }
 
-        return CsvFilesInfo::STATUS_FAIL;
+        return HttpStatusCodes::BAD_REQUEST;
     }
 
-    private function getStatusText(array $file): ?string
+    private function getStatusText(CsvFileDTO $file): string
     {
-        if ($file['type'] !== CsvFilesInfo::CSV_CODE) {
-            return 'Неверное расширение файла. Должен быть csv';
-        }
-        if ($file['size'] > CsvFilesInfo::MAX_CSV_SIZE) {
-            return 'Размер файла превышает ' . BytesConverterHelper::convert(CsvFilesInfo::MAX_CSV_SIZE);
+        $statusText = '';
+        if ($file->getError()) {
+            $statusText = 'Произошла ошибка при передаче файла на сервер';
+        } elseif ($file->getType() !== CsvFilesInfo::CODE) {
+            $statusText = 'Неверное расширение файла. Должен быть csv';
+        } elseif ($file->getSize() == 0) {
+            $statusText = 'Файл - пустой';
+        } elseif ($file->getSize() > CsvFilesInfo::MAX_SIZE) {
+            $statusText = 'Размер файла превышает ' . BytesConverter::convert(CsvFilesInfo::MAX_SIZE);
         }
 
-        return null;
-    }
-
-    private function getFileMap(object $file): array
-    {
-        return [
-            'name' => $file->getClientFilename(),
-            'type' => $file->getClientMediaType(),
-            'size' => $file->getSize(),
-            'error' => $file->getError(),
-        ];
+        return $statusText;
     }
 }
