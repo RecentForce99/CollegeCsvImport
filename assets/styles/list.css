@@ -1,0 +1,12 @@
+.table-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.td-link {
+    border: #323333 solid 1px;
+    background-color: #25abff;
+    cursor: pointer;
+}

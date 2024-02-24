@@ -11,14 +11,6 @@ class CsvFilesContentDTO
     private string $date;
     private ?int $fileId;
 
-    /**
-     * @param int|null $id
-     * @param string $email
-     * @param string $name
-     * @param int $quota
-     * @param string $date
-     * @param int|null $fileId
-     */
     public function __construct(?int $id, string $email, string $name, int $quota, string $date, ?int $fileId = null)
     {
         $this->id = $id;
@@ -79,12 +71,12 @@ class CsvFilesContentDTO
         $this->date = $date;
     }
 
-    public function getFileId(): int
+    public function getFileId(): ?int
     {
         return $this->fileId;
     }
 
-    public function setFileId(int $fileId): void
+    public function setFileId(?int $fileId): void
     {
         $this->fileId = $fileId;
     }

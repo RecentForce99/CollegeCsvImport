@@ -1,0 +1,18 @@
+.nikitq-table {
+    border-collapse: collapse;
+}
+
+.nikitq-table th, .nikitq-table td {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+.nikitq-table th, .nikitq-table td {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+.nikitq-table tr:first-child {
+    background-color: lightblue;
+    text-align: center;
+}

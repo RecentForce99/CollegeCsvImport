@@ -2,82 +2,45 @@
 
 namespace Nikitq\Api\DTO;
 
+use Nikitq\Api\ValueObjects\CsvFilesContentValueObject;
+
 class CsvFileDTO
 {
-    private string $tmpPath;
-    private string $name;
-    private string $type;
+    private int $id;
+
+    private string $originalName;
     private int $size;
-    private int $error;
     private string $path;
-    private int $statusCode; //HTTP status codes
-    private string $statusText;
-    private ?CsvFilesContentDTO $records;
+    private string $createdAt;
 
-    public function __construct(
-        string $tmpPath,
-        string $name,
-        string $type,
-        int $size,
-        int $error,
-        string $path = '',
-        int $statusCode = 200,
-        string $statusText = '',
-        CsvFilesContentDTO $records = null,
-    ) {
-        $this->tmpPath = $tmpPath;
-        $this->name = $name;
-        $this->type = $type;
+    public function __construct(int $id, string $originalName, int $size, string $path, string $createdAt)
+    {
+        $this->id = $id;
+        $this->originalName = $originalName;
         $this->size = $size;
-        $this->error = $error;
         $this->path = $path;
-        $this->statusCode = $statusCode;
-        $this->statusText = $statusText;
-        $this->records = $records;
+        $this->createdAt = $createdAt;
     }
 
-    public function setError(int $error): self
+
+    public function getId(): int
     {
-        $this->error = $error;
-        return $this;
+        return $this->id;
     }
 
-    public function setStatusCode(int $statusCode): self
+    public function setId(int $id): void
     {
-        $this->statusCode = $statusCode;
-        return $this;
+        $this->id = $id;
     }
 
-    public function setStatusText(string $statusText): self
+    public function getOriginalName(): string
     {
-        $this->statusText = $statusText;
-        return $this;
+        return $this->originalName;
     }
 
-    public function setPath(string $path): self
+    public function setOriginalName(string $originalName): void
     {
-        $this->path = $path;
-        return $this;
-    }
-
-    public function setRecords(?CsvFilesContentDTO $records): void
-    {
-        $this->records = $records;
-    }
-
-    public function getTmpPath(): string
-    {
-        return $this->tmpPath;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
+        $this->originalName = $originalName;
     }
 
     public function getSize(): int
@@ -85,9 +48,9 @@ class CsvFileDTO
         return $this->size;
     }
 
-    public function getError(): int
+    public function setSize(int $size): void
     {
-        return $this->error;
+        $this->size = $size;
     }
 
     public function getPath(): string
@@ -95,18 +58,18 @@ class CsvFileDTO
         return $this->path;
     }
 
-    public function getStatusCode(): int
+    public function setPath(string $path): void
     {
-        return $this->statusCode;
+        $this->path = $path;
     }
 
-    public function getStatusText(): string
+    public function getCreatedAt(): string
     {
-        return $this->statusText;
+        return $this->createdAt;
     }
 
-    public function getRecords(): ?CsvFilesContentDTO
+    public function setCreatedAt(string $createdAt): void
     {
-        return $this->records;
+        $this->createdAt = $createdAt;
     }
 }

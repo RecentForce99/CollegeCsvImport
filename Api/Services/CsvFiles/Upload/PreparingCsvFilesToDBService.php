@@ -1,12 +1,12 @@
 <?php
 
-namespace Nikitq\Api\Services\Upload;
+namespace Nikitq\Api\Services\CsvFiles\Upload;
 
-use DateTime;
-use Nikitq\Api\DTO\CsvFileDTO;
+use Nikitq\Api\DTO\CsvFileUploadDTO;
 use Nikitq\Api\DTO\CsvFilesContentDTO;
 use Nikitq\Api\Helpers\FileStatusManager;
 use Nikitq\Api\Helpers\HttpStatusCodes;
+use Nikitq\Api\ValueObjects\CsvFilesContentValueObject;
 
 class PreparingCsvFilesToDBService extends AbstractPreparingFiles
 {
@@ -22,7 +22,7 @@ class PreparingCsvFilesToDBService extends AbstractPreparingFiles
             $records = $this->getRecords($file);
             $preparedRecords = $this->getPreparedRecords($records);
 
-            if (empty($preparedRecords)) {
+            if (empty($preparedRecords->getRecords())) {
                 $this->setErrorForEmptyFile($file);
             }
 
@@ -31,7 +31,7 @@ class PreparingCsvFilesToDBService extends AbstractPreparingFiles
         }
     }
 
-    private function checkFileExistence(CsvFileDTO $file): bool
+    private function checkFileExistence(CsvFileUploadDTO $file): bool
     {
         if (!file_exists($_SERVER['DOCUMENT_ROOT'] . $file->getPath())) {
             $file = FileStatusManager::getFileWithError(
@@ -47,7 +47,7 @@ class PreparingCsvFilesToDBService extends AbstractPreparingFiles
         return true;
     }
 
-    private function getRecords(CsvFileDTO $file): array
+    private function getRecords(CsvFileUploadDTO $file): array
     {
         $handle = fopen($_SERVER['DOCUMENT_ROOT'] . $file->getPath(), 'r');
 
@@ -61,12 +61,12 @@ class PreparingCsvFilesToDBService extends AbstractPreparingFiles
         return $records;
     }
 
-    private function getPreparedRecords(array $records): array
+    private function getPreparedRecords(array $records): CsvFilesContentValueObject
     {
         $headers = $records[0];
         unset($records[0]);
 
-        $preparedRows = [];
+        $preparedRowsObj = new CsvFilesContentValueObject();
         foreach ($records as &$record) {
             $record = array_combine($headers, $record);
             if (!$this->areEmptyFields($record)) {
@@ -82,10 +82,10 @@ class PreparingCsvFilesToDBService extends AbstractPreparingFiles
                 null,
             );
 
-            $preparedRows[] = $recordMap;
+            $preparedRowsObj->addRecord($recordMap);
         }
 
-        return $preparedRows;
+        return $preparedRowsObj;
     }
 
     private function areEmptyFields(?array $record): bool
@@ -103,7 +103,7 @@ class PreparingCsvFilesToDBService extends AbstractPreparingFiles
         return true;
     }
 
-    private function setErrorForEmptyFile(CsvFileDTO $file): void
+    private function setErrorForEmptyFile(CsvFileUploadDTO $file): void
     {
         $this->failedFiles[] = FileStatusManager::getFileWithError(
             HttpStatusCodes::BAD_REQUEST,

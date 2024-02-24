@@ -1,8 +1,8 @@
 <?php
 
-namespace Nikitq\Api\Services\Upload;
+namespace Nikitq\Api\Services\CsvFiles\Upload;
 
-use Nikitq\Api\DTO\CsvFileDTO;
+use Nikitq\Api\DTO\CsvFileUploadDTO;
 use Nikitq\Api\Helpers\CsvFilesInfo;
 use Nikitq\Api\Helpers\FileStatusManager;
 use Nikitq\Api\Helpers\HttpStatusCodes;
@@ -52,7 +52,7 @@ class UploadCsvFilesToDirectoryService
         return $this->failedFiles;
     }
 
-    private function saveFile(CsvFileDTO $file, string $filePath): bool
+    private function saveFile(CsvFileUploadDTO $file, string $filePath): bool
     {
         $fileTmpPath = $file->getTmpPath();
         $uploadedFile = move_uploaded_file($fileTmpPath, $_SERVER['DOCUMENT_ROOT'] . $filePath);
@@ -64,7 +64,7 @@ class UploadCsvFilesToDirectoryService
         return true;
     }
 
-    private function getGeneratedPathRecursive(CsvFileDTO $file, string $fileName = ''): string
+    private function getGeneratedPathRecursive(CsvFileUploadDTO $file, string $fileName = ''): string
     {
         if (empty($fileName)) {
             $fileName = md5($file->getName());

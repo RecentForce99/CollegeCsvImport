@@ -6,16 +6,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Импорт CSV</title>
-    <link rel="stylesheet" href="assets/font/stylesheet.css">
-    <link rel="stylesheet" href="assets/styles/main.css">
-    <link rel="stylesheet" href="assets/styles/welcome.css">
-    <link rel="stylesheet" href="assets/styles/form.css">
+    <link rel="stylesheet" href="/assets/font/stylesheet.css">
+    <link rel="stylesheet" href="/assets/styles/main.css">
+    <link rel="stylesheet" href="/assets/styles/welcome.css">
+    <link rel="stylesheet" href="/assets/styles/form.css">
+    <link rel="stylesheet" href="/assets/styles/table.css">
 </head>
 <body>
 
 <div class="welcome">
     <h1>Добро пожаловать</h1>
-    <p>Ниже форма, которая позволяет импортировать данные из CSV-файла в БД и отобразить их на <a href="">отдельной
+    <p>Ниже форма, которая позволяет импортировать данные из CSV-файла в БД и отобразить их на <a href="/csv/list/">отдельной
             странице</a></p>
 </div>
 
@@ -37,13 +38,12 @@
                 <th>Название файла</th>
                 <th>Размер файла</th>
                 <th>Статус</th>
-                <th>Сообщение</th>
             </tr>
         </table>
     </div>
 
     <button type="submit" class="btn" style="display: none">
-        Загрузить
+        Отправить
     </button>
 </form>
 

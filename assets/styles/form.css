@@ -65,33 +65,6 @@
     display: none;
 }
 
-.nikitq-table {
-    border-collapse: collapse;
-}
-
-.nikitq-table th, .nikitq-table td {
-    border: 1px solid #000;
-    padding: 8px;
-}
-
-.nikitq-table th, .nikitq-table td {
-    border: 1px solid #000;
-    padding: 8px;
-}
-
-.nikitq-table tr:first-child {
-    background-color: lightblue;
-    text-align: center;
-}
-
-.nikitq-table td:nth-child(1) {
-    width: 30rem;
-}
-
-.nikitq-table td:nth-child(2) {
-    width: 1rem;
-}
-
 .error-row {
     background-color: #e00000;
 }

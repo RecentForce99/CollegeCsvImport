@@ -1,8 +1,8 @@
 <?php
 
-namespace Nikitq\Api\Services\Upload;
+namespace Nikitq\Api\Services\CsvFiles\Upload;
 
-use Nikitq\Api\DTO\CsvFileDTO;
+use Nikitq\Api\DTO\CsvFileUploadDTO;
 use Nikitq\Api\Helpers\BytesConverter;
 use Nikitq\Api\Helpers\CsvFilesInfo;
 use Nikitq\Api\Helpers\FileStatusManager;
@@ -30,9 +30,9 @@ class PreparingCsvFilesToUploadService extends AbstractPreparingFiles
         }
     }
 
-    private function getFileMap(UploadedFile $file): CsvFileDTO
+    private function getFileMap(UploadedFile $file): CsvFileUploadDTO
     {
-        return new CsvFileDTO(
+        return new CsvFileUploadDTO(
             $file->file,
             $file->getClientFilename(),
             $file->getClientMediaType(),
@@ -50,7 +50,7 @@ class PreparingCsvFilesToUploadService extends AbstractPreparingFiles
         return HttpStatusCodes::BAD_REQUEST;
     }
 
-    private function getStatusText(CsvFileDTO $file): string
+    private function getStatusText(CsvFileUploadDTO $file): string
     {
         $statusText = '';
         if ($file->getError()) {

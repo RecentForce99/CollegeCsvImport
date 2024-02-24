@@ -1,6 +1,6 @@
 <?php
 
-namespace Nikitq\Api\Services\Upload;
+namespace Nikitq\Api\Services\CsvFiles\Upload;
 
 abstract class AbstractPreparingFiles
 {

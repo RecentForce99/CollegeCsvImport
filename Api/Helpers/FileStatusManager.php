@@ -2,11 +2,11 @@
 
 namespace Nikitq\Api\Helpers;
 
-use Nikitq\Api\DTO\CsvFileDTO;
+use Nikitq\Api\DTO\CsvFileUploadDTO;
 
 class FileStatusManager
 {
-    public static function getFileWithStatus(int $statusCode, string $statusText, CsvFileDTO $file): CsvFileDTO
+    public static function getFileWithStatus(int $statusCode, string $statusText, CsvFileUploadDTO $file): CsvFileUploadDTO
     {
         $file->setError(0);
         $file->setStatusCode($statusCode);
@@ -15,7 +15,7 @@ class FileStatusManager
         return $file;
     }
 
-    public static function getFileWithError(int $statusCode, string $statusText, CsvFileDTO $file): CsvFileDTO
+    public static function getFileWithError(int $statusCode, string $statusText, CsvFileUploadDTO $file): CsvFileUploadDTO
     {
         $file->setError(1);
         $file->setStatusCode($statusCode);

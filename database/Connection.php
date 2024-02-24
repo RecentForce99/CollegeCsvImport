@@ -7,8 +7,9 @@ use PDO;
 class Connection
 {
     private static ?Connection $instance = null;
+    private ?PDO $pdo = null;
 
-    private function __construct()
+    private function construct()
     {
     }
 
@@ -23,6 +24,14 @@ class Connection
 
     public function getDB(): PDO
     {
-        return new PDO("{$_ENV['DB_CONNECTION']}:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_DATABASE']}", $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD']);
+        if ($this->pdo === null) {
+            $this->pdo = new PDO(
+                "{$_ENV['DB_CONNECTION']}:host={$_ENV['DB_HOST']};dbname={$_ENV['DB_DATABASE']}",
+                $_ENV['DB_USERNAME'],
+                $_ENV['DB_PASSWORD']
+            );
+        }
+
+        return $this->pdo;
     }
 }
