@@ -68,6 +68,10 @@ class PreparingCsvFilesToDBService extends AbstractPreparingFiles
 
         $preparedRowsObj = new CsvFilesContentValueObject();
         foreach ($records as &$record) {
+            if (count($headers) !== count($record)) {
+                continue;
+            }
+
             $record = array_combine($headers, $record);
             if (!$this->areEmptyFields($record)) {
                 continue;

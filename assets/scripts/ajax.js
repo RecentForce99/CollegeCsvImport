@@ -18,14 +18,18 @@ document.querySelector('.nikitq-form').addEventListener('submit', (e) => {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Произошло неожиданное исключение');
+                throw new Error();
             }
             response.json().then(files => {
                 setStatuses(files)
             })
         })
         .catch(error => {
-            console.error(error);
+            const fileRows = document.querySelectorAll('.additional-rows');
+            fileRows.forEach(function (tr) {
+                tr.classList.add('error-row');
+                tr.querySelector('.nikitq-file-status').innerText = 'Произошло неожиданное исключение';
+            });
         });
 });
 
@@ -44,8 +48,7 @@ function setStatuses(files) {
     }
 }
 
-function setStatus(tr, selector, statusText)
-{
+function setStatus(tr, selector, statusText) {
     tr.classList.add(selector);
     let fileStatusText = tr.querySelector('.nikitq-file-status');
     fileStatusText.innerText = statusText;
