@@ -3,4 +3,4 @@ vendor
 .env
 composer.lock
 
-uploads/csv/.csv
+uploads
